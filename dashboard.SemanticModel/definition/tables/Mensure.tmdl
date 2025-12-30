@@ -1,0 +1,58 @@
+table Mensure
+	lineageTag: 97de2b79-3f92-45c6-bc23-0bd797133685
+
+	measure TotalAmountSUM = SUM(fBaseOrder[TotalAmount])
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 59905c95-6aa4-43b2-b949-cc946aae4fa0
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure GrossProfitTotal = SUM(fBaseOrder[GrossProfit])
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: f223ef6e-59f1-44db-9405-4d5d2683b90f
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'GrossMargin %' = DIVIDE(Mensure[GrossProfitTotal], Mensure[TotalAmountSUM])
+		lineageTag: 3308cc4c-78eb-4626-ae52-593a696d9688
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure TaxTotal = SUM(fBaseOrder[Tax])
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: b14644ab-111f-4675-b1d9-02551e7fcee0
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure ShippingTotal = SUM(fBaseOrder[ShippingCost])
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: edd90086-a3c4-41a5-ac58-a21edb058005
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure NetProfitTotal = Mensure[TotalAmountSUM] - (Mensure[CostProductTotal] + Mensure[TaxTotal] + Mensure[ShippingTotal])
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 3a33f377-41c6-44a5-8f82-537a6a54f32f
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure CostProductTotal = SUM(fBaseOrder[CostProduct])
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 066a4606-9391-407e-abf2-fd8985ee49f2
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	partition Mensure = m
+		mode: import
+		source =
+				let
+				    Source = "Mensure",
+				    #"Converted to Table" = #table(1, {{Source}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Converted to Table",{"Column1"})
+				in
+				    #"Removed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

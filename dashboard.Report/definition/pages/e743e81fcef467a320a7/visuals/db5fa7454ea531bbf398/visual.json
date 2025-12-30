@@ -1,0 +1,57 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
+  "name": "db5fa7454ea531bbf398",
+  "position": {
+    "x": 1006.25,
+    "y": 16.25,
+    "z": 3,
+    "height": 142.5,
+    "width": 250,
+    "tabOrder": 3
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Mensure"
+                    }
+                  },
+                  "Property": "GrossProfitTotal"
+                }
+              },
+              "queryRef": "Mensure.GrossProfitTotal",
+              "nativeQueryRef": "Lucro Bruto Total",
+              "displayName": "Lucro Bruto Total"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Mensure"
+                  }
+                },
+                "Property": "GrossProfitTotal"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

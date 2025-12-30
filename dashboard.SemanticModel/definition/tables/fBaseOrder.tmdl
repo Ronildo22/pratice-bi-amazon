@@ -113,6 +113,33 @@ table fBaseOrder
 
 		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
 
+	column CostProduct = (fBaseOrder[Quantity] * fBaseOrder[UnitPrice]) - fBaseOrder[Discount]
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 9937af8b-b7ff-47c1-9ad4-01857e1fb183
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column GrossProfit = fBaseOrder[TotalAmount] - fBaseOrder[CostProduct]
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 0b90cf69-e923-433a-b76f-62638c95e79a
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column NetProfit = fBaseOrder[TotalAmount] - (fBaseOrder[CostProduct] + fBaseOrder[Tax] + fBaseOrder[ShippingCost])
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: a46d9df1-78fb-439a-aadc-8baecdd6ac5d
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
 	partition fBaseOrder = m
 		mode: import
 		source =

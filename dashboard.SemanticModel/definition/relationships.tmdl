@@ -3,21 +3,31 @@ relationship 41c837cf-7b64-465b-aac5-2abdd94fc59f
 	fromColumn: dBaseOrderStatus.OrderDate
 	toColumn: LocalDateTable_d6e1542f-65ff-48d9-aa33-a69fd53e0d2a.Date
 
-relationship AutoDetected_abac9f0f-5db5-4893-89d4-4684b393edcd
-	crossFilteringBehavior: bothDirections
-	fromCardinality: one
-	fromColumn: dBaseRegion.RegionID
-	toColumn: fBaseOrder.RegionID
+relationship b8ce3d62-d66b-734a-c9d9-ceaa603bfb83
+	toCardinality: many
+	fromColumn: fBaseOrder.CustomerID
+	toColumn: dBaseCustomer.CustomerID
 
-relationship AutoDetected_5874911f-494e-4fda-ad91-258b8f8496e2
-	crossFilteringBehavior: bothDirections
-	fromCardinality: one
-	fromColumn: dBasePaymentMethod.PaymentMethodID
-	toColumn: fBaseOrder.PaymentMethodID
-
-relationship AutoDetected_c6e23e2b-01cf-4321-b563-aad478d00893
+relationship 92ed3084-51f0-647a-544d-c9312141062b
 	crossFilteringBehavior: bothDirections
 	fromCardinality: one
 	fromColumn: dBaseOrderStatus.OrderStatusID
 	toColumn: fBaseOrder.OrderStatusID
+
+relationship 8c85ab84-0b3c-449a-5f38-b111047d42da
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: fBaseOrder.PaymentMethodID
+	toColumn: dBasePaymentMethod.PaymentMethodID
+
+relationship e32c62ff-bfff-08d6-e228-d494e762142b
+	toCardinality: many
+	fromColumn: fBaseOrder.ProductID
+	toColumn: dBaseProduct.ProductID
+
+relationship c105411d-f4de-bce3-1e61-9cd867f46080
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: fBaseOrder.RegionID
+	toColumn: dBaseRegion.RegionID
 
