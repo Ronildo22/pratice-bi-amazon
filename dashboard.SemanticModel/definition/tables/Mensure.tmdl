@@ -42,6 +42,12 @@ table Mensure
 
 		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
 
+	measure 'TotalAmount %' = SUM(fBaseOrder[TotalAmount])
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: bae58790-061c-4820-a6f4-1133893e5544
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
 	partition Mensure = m
 		mode: import
 		source =
