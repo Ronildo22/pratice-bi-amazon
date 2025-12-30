@@ -1,0 +1,49 @@
+table dBaseOrderStatus
+	lineageTag: 519c8e14-79d3-4f82-9132-39d1158fee4c
+
+	column OrderStatusID
+		dataType: string
+		lineageTag: 7ba01729-8801-4c9f-9641-d07d00573dd3
+		summarizeBy: none
+		sourceColumn: OrderStatusID
+
+		annotation SummarizationSetBy = Automatic
+
+	column OrderDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 0b87d815-2f6e-476b-833c-198027aeca9b
+		summarizeBy: none
+		sourceColumn: OrderDate
+
+		variation Variation
+			isDefault
+			relationship: 41c837cf-7b64-465b-aac5-2abdd94fc59f
+			defaultHierarchy: LocalDateTable_d6e1542f-65ff-48d9-aa33-a69fd53e0d2a.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column OrderStatus
+		dataType: string
+		lineageTag: 060e84b1-7cf7-4d57-81b1-bf034eaa2056
+		summarizeBy: none
+		sourceColumn: OrderStatus
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dBaseOrderStatus = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\ronildo\Desktop\workspace\pratice-bi-amazon\amazon_dataset\dBaseOrderStatus.csv"),[Delimiter=",", Columns=3, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"OrderStatusID", type text}, {"OrderDate", type date}, {"OrderStatus", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

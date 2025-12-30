@@ -1,0 +1,129 @@
+table fBaseOrder
+	lineageTag: a845e105-e4f5-4c19-9290-55c4a579f061
+
+	column OrderID
+		dataType: string
+		lineageTag: 39c87d16-6361-4104-8c36-13d1721fc9e5
+		summarizeBy: none
+		sourceColumn: OrderID
+
+		annotation SummarizationSetBy = Automatic
+
+	column CustomerID
+		dataType: string
+		lineageTag: 915179a4-fc6b-42ad-b241-77391dbdc82b
+		summarizeBy: none
+		sourceColumn: CustomerID
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProductID
+		dataType: string
+		lineageTag: 2f64b693-a624-4d0e-8da1-1b34b9c685b0
+		summarizeBy: none
+		sourceColumn: ProductID
+
+		annotation SummarizationSetBy = Automatic
+
+	column RegionID
+		dataType: string
+		lineageTag: f996d429-9520-4eb2-98ec-6a30436213e9
+		summarizeBy: none
+		sourceColumn: RegionID
+
+		annotation SummarizationSetBy = Automatic
+
+	column PaymentMethodID
+		dataType: string
+		lineageTag: 35c588ed-5360-48a6-93da-c550625a73f0
+		summarizeBy: none
+		sourceColumn: PaymentMethodID
+
+		annotation SummarizationSetBy = Automatic
+
+	column OrderStatusID
+		dataType: string
+		lineageTag: 0109c44e-3e10-4eb6-8e66-b801edef1caf
+		summarizeBy: none
+		sourceColumn: OrderStatusID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quantity
+		dataType: int64
+		formatString: 0
+		lineageTag: f689792e-d2c1-4951-9ffb-43198fe54397
+		summarizeBy: sum
+		sourceColumn: Quantity
+
+		annotation SummarizationSetBy = Automatic
+
+	column Discount
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 588b6c4f-bf4e-4170-9e04-5bfd80336062
+		summarizeBy: sum
+		sourceColumn: Discount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column UnitPrice
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 80199e51-23d2-43a5-8a1d-63cf1aa62087
+		summarizeBy: sum
+		sourceColumn: UnitPrice
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column Tax
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 7588b021-21fe-4ec5-9d40-fd08825db95f
+		summarizeBy: sum
+		sourceColumn: Tax
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column ShippingCost
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 16972e8c-e94c-457d-ade8-f5a36e411580
+		summarizeBy: sum
+		sourceColumn: ShippingCost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column TotalAmount
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 7ffa3fe2-a461-4896-a9e2-90fac274e79c
+		summarizeBy: sum
+		sourceColumn: TotalAmount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	partition fBaseOrder = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\ronildo\Desktop\workspace\pratice-bi-amazon\amazon_dataset\fBaseOrder.csv"),[Delimiter=",", Columns=12, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"OrderID", type text}, {"CustomerID", type text}, {"ProductID", type text}, {"RegionID", type text}, {"PaymentMethodID", type text}, {"OrderStatusID", type text}, {"Quantity", Int64.Type}, {"Discount", Currency.Type}, {"UnitPrice", Currency.Type}, {"Tax", Currency.Type}, {"ShippingCost", Currency.Type}, {"TotalAmount", Currency.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

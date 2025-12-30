@@ -1,0 +1,34 @@
+table dBasePaymentMethod
+	lineageTag: 5a5d5ae0-62ae-435f-9cfc-6ae967663740
+
+	column PaymentMethodID
+		dataType: string
+		lineageTag: e648625d-ec28-480b-86c8-e18931b38e49
+		summarizeBy: none
+		sourceColumn: PaymentMethodID
+
+		annotation SummarizationSetBy = Automatic
+
+	column PaymentMethod
+		dataType: string
+		lineageTag: 9714858c-5a6a-4fa0-a4e6-5fe0fcd5ca79
+		summarizeBy: none
+		sourceColumn: PaymentMethod
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dBasePaymentMethod = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\ronildo\Desktop\workspace\pratice-bi-amazon\amazon_dataset\dBasePaymentMethod.csv"),[Delimiter=",", Columns=2, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Column1", type text}, {"Column2", type text}}),
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Changed Type", [PromoteAllScalars=true]),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Promoted Headers",{{"PaymentMethodID", type text}, {"PaymentMethod", type text}})
+				in
+				    #"Changed Type1"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

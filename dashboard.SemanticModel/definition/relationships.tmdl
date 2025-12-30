@@ -1,0 +1,23 @@
+relationship 41c837cf-7b64-465b-aac5-2abdd94fc59f
+	joinOnDateBehavior: datePartOnly
+	fromColumn: dBaseOrderStatus.OrderDate
+	toColumn: LocalDateTable_d6e1542f-65ff-48d9-aa33-a69fd53e0d2a.Date
+
+relationship AutoDetected_abac9f0f-5db5-4893-89d4-4684b393edcd
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: dBaseRegion.RegionID
+	toColumn: fBaseOrder.RegionID
+
+relationship AutoDetected_5874911f-494e-4fda-ad91-258b8f8496e2
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: dBasePaymentMethod.PaymentMethodID
+	toColumn: fBaseOrder.PaymentMethodID
+
+relationship AutoDetected_c6e23e2b-01cf-4321-b563-aad478d00893
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: dBaseOrderStatus.OrderStatusID
+	toColumn: fBaseOrder.OrderStatusID
+

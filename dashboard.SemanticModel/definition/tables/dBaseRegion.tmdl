@@ -1,0 +1,50 @@
+table dBaseRegion
+	lineageTag: 79714fe4-782d-45c2-ae3b-ed7939242148
+
+	column RegionID
+		dataType: string
+		lineageTag: 910d0246-d829-488f-a35d-7d0fe9e489e8
+		summarizeBy: none
+		sourceColumn: RegionID
+
+		annotation SummarizationSetBy = Automatic
+
+	column City
+		dataType: string
+		lineageTag: bcf200eb-4b6f-4c1a-a2b7-7e0f4f995dd2
+		summarizeBy: none
+		sourceColumn: City
+
+		annotation SummarizationSetBy = Automatic
+
+	column State
+		dataType: string
+		lineageTag: e192cf85-01d4-448f-a834-c07aa75b339d
+		summarizeBy: none
+		sourceColumn: State
+
+		annotation SummarizationSetBy = Automatic
+
+	column Country
+		dataType: string
+		lineageTag: 92084204-245e-4cb9-b7f4-62417a775dcf
+		summarizeBy: none
+		sourceColumn: Country
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dBaseRegion = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\ronildo\Desktop\workspace\pratice-bi-amazon\amazon_dataset\dBaseRegion.csv"),[Delimiter=",", Columns=4, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Column1", type text}, {"Column2", type text}, {"Column3", type text}, {"Column4", type text}}),
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Changed Type", [PromoteAllScalars=true]),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Promoted Headers",{{"RegionID", type text}, {"City", type text}, {"State", type text}, {"Country", type text}})
+				in
+				    #"Changed Type1"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
